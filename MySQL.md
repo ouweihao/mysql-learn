@@ -1,4 +1,4 @@
-![LOG](img\log.jpg)
+![LOG](img/log.jpg)
 
 # 1、 MySQL #
 
