@@ -1,4 +1,4 @@
-![LOG](img/log.jpg)
+![LOG](img\log.jpg)
 
 # 1、 MySQL #
 
@@ -520,20 +520,166 @@ ALTER TABLE 表 ADD CONSTRAINT 约束名 FOREIGN KEY(作为外键的字段) REFE
 
 ## 3.2、 DML语言（全部记住，背下来）
 
+`数据库的意义`：数据存储，数据管理
 
+DML语言：数据操作语言
+
+- Insert
+- Update
+- Delete
 
 
 
 ## 3.3、 添加
 
+> insert
 
+```sql
+-- 插入数据
+-- insert into `表名`([字段1], [字段2]) values(值1), (值2), ...
+
+-- 由于主键自增我们可以省（如果不写表的字段，他就会一一匹配）
+
+-- 一般写插入语句，我们一定要数据和字段一一对应!~
+```
+
+==注意：==
+
+1. 字段和字段之间使用英文逗号隔开
+2. 字段是可以省略的，但后面的值必须要一一对应，不能少
+3. 可以同时插入多条数据，values后面的值使用逗号隔开
 
 
 
 ## 3.4、 修改
 
+> update
 
+``` sql
+-- 修改单个值
+update table_name set column_name = value where 条件
+
+-- 修改多个值
+update table_name set colume_name1 = value1, column_name2 = value2[, ...] where 条件
+```
+
+条件：where子句运算符
+
+操作符返回bool
+
+| 操作符                    | 含义         | 范围             | 结果             |
+| ------------------------- | ------------ | ---------------- | ---------------- |
+| =                         | 等于         | 5 = 5            | true             |
+| <> 或者 !=                | 不等于       | 3 <> 4           | true             |
+| >                         | 大于         |                  |                  |
+| <                         | 小于         |                  |                  |
+| >=                        | 大于等于     |                  |                  |
+| <=                        | 小于等于     |                  |                  |
+| BETWEEN VALUE1 AND VALUE2 | 在某个范围内 | VALUE1 到 VALUE2 | [VALUE1, VALUE2] |
+| AND                       | &&           | 1 > 0 AND 5 > 6  | false            |
+| OR                        | \|\|         | 1 > 0 OR 5 > 6   | true             |
+
+`注意：`
+
+- 筛选的条件，如果没有指定，则会修改所有的值
+- value，是一个具体的值，也可以是一个变量
+
+- 多个设置的属性之间用逗号隔开
 
 
 
 ## 3.5、 删除
+
+> delete
+
+`语法：` delete from table_name [where 条件]
+
+
+
+> TRUNCATE
+
+语法：TRUNCATE TABLE table_name
+
+作用：完全清空一个数据库表，表的结构和索引不会变
+
+
+
+> delete和TRUNCATE的异同点
+
+- 相同点：都能删除数据，都不会删除表结构
+
+- 不同点：
+    - TRUNCATE 重新设置 自增列计数器会归零
+    - TRUNCATE 不会影响事务
+
+
+
+扩展：`Delete删除的问题`，重启数据库
+
+- InnoDB        自增列会从1开始（存在内存中，断电即失）
+- MyISAM        继续从上一个自增量开始（存在文件中，不会丢失）
+
+
+
+# 4、 DQL查询数据（*****）
+
+## 4.1、 DQL（Date Query Language，数据库查询语言）
+
+- 所有的查询操作都用它 SELECT
+- 简单的查询，复杂的查询它都能做
+- ==数据库中最核心的语言，最重要的语句==
+- 使用频率最高的语句
+
+
+
+## 4.2、指定查询字段
+
+```sql
+-- 最简单的查询语句
+select column_name[, column_name2, ...] from table
+
+-- 使用别名
+select column_name as alias1[, column_name2 as alias2, ...] from table as table_alias
+
+-- 函数CONCAT(a, b)
+select CONCAT(a, b) as newAlias from table
+```
+
+
+
+> 去重（distinct）
+
+语法：
+
+```sql
+select distinct column_name from table
+```
+
+
+
+作用： 去除SELECT查询出来的结果中重复的数据，重复的数据中显示一条
+
+
+
+> 数据库的列（表达式）
+
+```sql
+select version() -- 查询系统版本（函数）
+select 100*9-1 -- 用于计算（表达式）
+select @@auto_increment -- 查询自增长步长（变量）
+```
+
+==数据库中的表达式：文本值，列，NULL，函数，计算表达式，系统变量…==
+
+select 表达式 from 表
+
+
+
+## 4.3、where条件子句
+
+作用：检索数据中==符合条件==的值：
+
+
+
+
+
